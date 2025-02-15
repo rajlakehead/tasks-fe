@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://spring-boot-app-latest-77kb.onrender.com',
+        target: 'https://spring-app-ev1u.onrender.com/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
