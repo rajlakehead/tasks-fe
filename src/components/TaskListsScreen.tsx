@@ -21,7 +21,7 @@ const TaskListScreen: React.FC = () => {
     navigate("/new-task-list");
   };
 
-  const handleSelectTaskList = (taskListId: string | undefined) => {
+  const handleSelectTaskList = (taskListId: string | "") => {
     navigate(`/task-lists/${taskListId}`);
     console.log(`Navigating to task list ${taskListId}`);
   };
