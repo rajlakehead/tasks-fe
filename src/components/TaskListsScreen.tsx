@@ -9,10 +9,10 @@ const TaskListScreen: React.FC = () => {
 
   // Fetch task lists when the component mounts
   useEffect(() => {
-    if (null == state.taskLists) {
+    if (!state.taskLists) {
       api.fetchTaskLists();
     }
-  }, [state]);
+  }, [state, api]); // Added `api` to the dependency array to avoid stale closure issues
 
   // Get a handle on the router
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const TaskListScreen: React.FC = () => {
     navigate("/new-task-list");
   };
 
-  const handleSelectTaskList = (taskListId: string | "") => {
+  const handleSelectTaskList = (taskListId: string) => {
     navigate(`/task-lists/${taskListId}`);
     console.log(`Navigating to task list ${taskListId}`);
   };
@@ -38,8 +38,8 @@ const TaskListScreen: React.FC = () => {
       >
         Create New Task List
       </Button>
-      {state.taskLists.map((list) => {
-        return (
+      {state.taskLists?.length ? ( // Ensure `taskLists` is not null/undefined before mapping
+        state.taskLists.map((list) => (
           <Card
             key={list.id}
             isPressable
@@ -50,24 +50,22 @@ const TaskListScreen: React.FC = () => {
           >
             <CardBody>
               <div className="flex items-center">
-                <List
-                  size={20}
-                  className="mr-2 opacity-[40%]"
-                  aria-hidden="true"
-                />
-                <h2 className="text-lg font-semibold">{list.title}</h2>{" "}
+                <List size={20} className="mr-2 opacity-[40%]" aria-hidden="true" />
+                <h2 className="text-lg font-semibold">{list.title}</h2>
               </div>
               <p className="text-sm text-gray-500 mt-2">{list.count} tasks</p>
               <Progress
                 value={list.progress ? list.progress * 100 : 0}
                 className="mt-2"
                 color="primary"
-                aria-label={`Progress for ${list.title}: ${list.progress}%`}
+                aria-label={`Progress for ${list.title}: ${list.progress ?? 0}%`}
               />
             </CardBody>
           </Card>
-        );
-      })}
+        ))
+      ) : (
+        <p className="text-gray-500 text-sm">No task lists available.</p>
+      )}
     </div>
   );
 };
