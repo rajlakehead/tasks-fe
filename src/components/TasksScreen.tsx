@@ -76,7 +76,7 @@ const TaskListScreen: React.FC = () => {
         task.status === TaskStatus.CLOSED ? TaskStatus.OPEN : TaskStatus.CLOSED;
 
       api
-        .updateTask(listId, task.id, updatedTask)
+        .updateTask(listId, task.id as string, updatedTask)
         .then(() => api.fetchTasks(listId));
     }
   };
@@ -89,7 +89,7 @@ const TaskListScreen: React.FC = () => {
   };
 
   const tableRows = () => {
-    if (null != listId && null != state.tasks[listId]) {
+    if (listId && state.tasks[listId]) {
       return state.tasks[listId].map((task) => (
         <TableRow key={task.id} className="border-t">
           <TableCell className="px-4 py-2">
@@ -127,7 +127,7 @@ const TaskListScreen: React.FC = () => {
               </Button>
               <Button
                 variant="ghost"
-                onClick={() => api.deleteTask(listId, task.id)}
+                onClick={() => api.deleteTask(listId, task.id as string)}
                 aria-label={`Delete task "${task.title}"`}
               >
                 <Trash className="h-4 w-4" />
@@ -136,10 +136,12 @@ const TaskListScreen: React.FC = () => {
           </TableCell>
         </TableRow>
       ));
-    } else {
-      return null;
     }
+
+    // Return an empty array instead of null
+    return [];
   };
+
 
   if (isLoading) {
     return <Spinner />; // Or your preferred loading indicator
