@@ -170,7 +170,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const API_URL = import.meta.env.VITE_BACKEND_URL;;
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "";
 
   const jsonHeaders = {
     headers: { "Content-Type": "application/json" },
