@@ -170,7 +170,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const API_URL = "https://your-backend-server.com";
+  const API_URL = "https://spring-app-ev1u.onrender.com";
 
   const jsonHeaders = {
     headers: { "Content-Type": "application/json" },
