@@ -180,7 +180,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   const api: AppContextType["api"] = {
     fetchTaskLists: async () => {
       const response = await axios.get<TaskList[]>(
-        "${API_URL}/api/task-lists",
+        `${API_URL}/api/task-lists`,
         jsonHeaders
       );
       dispatch({ type: FETCH_TASKLISTS, payload: response.data });
@@ -194,7 +194,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     createTaskList: async (taskList) => {
       const response = await axios.post<TaskList>(
-        "${API_URL}/api/task-lists",
+        `${API_URL}/api/task-lists`,
         taskList,
         jsonHeaders
       );
